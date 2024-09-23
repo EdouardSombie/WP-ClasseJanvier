@@ -14,6 +14,7 @@ add_action('after_setup_theme', 'esgi_theme_setup');
 function esgi_theme_setup()
 {
     add_theme_support('custom-logo');
+    add_theme_support('post-thumbnails');
 }
 
 
