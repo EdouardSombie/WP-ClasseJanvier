@@ -1,0 +1,31 @@
+.post,
+.page {
+	@include text4;
+	h1 {
+		text-align: center;
+		@include text1;
+		margin-bottom: 2rem;
+	}
+	.post-meta {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		@include text6;
+		gap: 2rem;
+		margin-bottom: 3rem;
+		.post-author {
+			display: flex;
+			gap: 0.5rem;
+			align-items: center;
+
+			img {
+				aspect-ratio: 1/1;
+				width: 2rem;
+				display: block;
+				border-radius: 9999px;
+				object-fit: cover;
+				object-position: center;
+			}
+		}
+	}
+}

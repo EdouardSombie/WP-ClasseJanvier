@@ -15,8 +15,14 @@ function esgi_theme_setup()
 {
     add_theme_support('custom-logo');
     add_theme_support('post-thumbnails');
+    add_theme_support('widgets');
 }
 
+add_filter('the_content', 'esgi_the_content');
+function esgi_the_content($input)
+{
+    return $input . ' 😅';
+}
 
 /* s'accrocher au hook d'action after_setup_theme */
 add_action('after_setup_theme', 'esgi_register_nav_menus');
@@ -26,6 +32,126 @@ function esgi_register_nav_menus()
         'primary_menu' => __('Menu principal', 'ESGI'),
     ]);
 }
+
+
+/* Customizer WP */
+
+add_action('customize_register', 'esgi_customize_register');
+
+function esgi_customize_register($wp_customize)
+{
+
+    // Ajouter une section ESGI
+    $wp_customize->add_section('esgi_section', array(
+        'title' => 'Paramètres ESGI',
+        'description' => 'Faites-vous plez...',
+        'panel' => '', // Not typically needed.
+        'priority' => 0,
+        'capability' => 'edit_theme_options',
+        'theme_supports' => '', // Rarely needed.
+    ));
+
+    // Ajout des settings
+    $wp_customize->add_setting('main_color', array(
+        'type' => 'theme_mod', // or 'option'
+        'capability' => 'edit_theme_options',
+        'theme_supports' => '', // Rarely needed.
+        'default' => '',
+        'transport' => 'refresh', // or postMessage
+        'sanitize_callback' => 'sanitize_hex_color',
+        'sanitize_js_callback' => '', // Basically to_json.
+    ));
+
+    $wp_customize->add_setting('dark_mode', array(
+        'type' => 'theme_mod', // or 'option'
+        'capability' => 'edit_theme_options',
+        'theme_supports' => '', // Rarely needed.
+        'default' => '',
+        'transport' => 'refresh', // or postMessage
+        'sanitize_callback' => 'esgi_sanitize_bool',
+        'sanitize_js_callback' => '', // Basically to_json.
+    ));
+
+    $wp_customize->add_setting('sidebar', array(
+        'type' => 'theme_mod', // or 'option'
+        'capability' => 'edit_theme_options',
+        'theme_supports' => '', // Rarely needed.
+        'default' => '',
+        'transport' => 'refresh', // or postMessage
+        'sanitize_callback' => 'esgi_sanitize_bool',
+        'sanitize_js_callback' => '', // Basically to_json.
+    ));
+
+    // Ajout des controles
+    $wp_customize->add_control('dark_mode', array(
+        'type' => 'checkbox',
+        'priority' => 2, // Within the section.
+        'section' => 'esgi_section', // Required, core or custom.
+        'label' => 'Activer le mode sombre',
+        'description' => 'Black is beautiful :)',
+    ));
+
+    $wp_customize->add_control('sidebar', array(
+        'type' => 'checkbox',
+        'priority' => 2, // Within the section.
+        'section' => 'esgi_section', // Required, core or custom.
+        'label' => 'Afficher la barre latérale sur les pages articles.',
+        'description' => '',
+    ));
+
+    // Cas particulier d'un color picker
+    $wp_customize->add_control(new WP_Customize_Color_Control($wp_customize, 'main_color', array(
+        'label' => 'Couleur principale',
+        'section' => 'esgi_section',
+        'priority' => 1, // Within the section.
+    )));
+}
+
+function esgi_sanitize_bool($value)
+{
+    return is_bool($value) ? $value : false;
+}
+
+/* Application des paramètres du customizer */
+add_filter('body_class', 'esgi_body_class');
+
+function esgi_body_class($classes)
+{
+    $isDark = get_theme_mod('dark_mode', false);
+    if ($isDark) {
+        $classes[] = 'dark';
+    }
+    return $classes;
+}
+
+
+add_action('wp_head', 'esgi_wp_head', 100);
+function esgi_wp_head()
+{
+    $mainColor = get_theme_mod('main_color', '#3F51B5');
+    echo '<style>
+            :root{
+                --main-color: ' . $mainColor . ';
+                }
+        </style>';
+}
+
+
+// Enregistrement de zones de widget //
+add_action('widgets_init', 'esgi_widget_init');
+function esgi_widget_init()
+{
+    register_sidebar([
+        'name'          => 'Barre latérale',
+        'id'            => 'sidebar-1',
+        'description'   => 'Zone de widgets présente dans la barre latérale des articles',
+        'before_widget' => '',
+        'after_widget'  => '',
+        'before_title'  => '<h3>',
+        'after_title'   => '</h3>',
+    ]);
+}
+
 
 
 function esgi_get_icon($name)

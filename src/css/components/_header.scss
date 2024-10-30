@@ -1,21 +1,23 @@
-#site-header{
+#site-header {
 	font-family: $font2;
-	padding: rem(24) 0 rem(122);
+	padding: rem(24) 0 rem(80);
 	@include text3;
-	ul{
+	ul {
 		list-style: none;
 		margin: 0;
 		padding: 0;
 		display: flex;
 		justify-content: center;
-		li{
-			&.current-menu-item, &.current_page_parent, &:hover{
-				a{
+		li {
+			&.current-menu-item,
+			&.current_page_parent,
+			&:hover {
+				a {
 					background-color: var(--main-color);
 					color: $white;
 				}
 			}
-			a{	
+			a {
 				padding: rem(9) rem(7);
 				display: block;
 				text-decoration: none;
@@ -26,5 +28,4 @@
 			}
 		}
 	}
-
 }

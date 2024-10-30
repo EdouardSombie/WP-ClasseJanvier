@@ -4433,9 +4433,65 @@ summary {
   --text-color: #FFF;
 }
 
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  line-height: 1.5;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+.post,
+.page {
+  font-family: "Source Serif Pro", serif;
+  font-size: 1rem;
+  line-height: 1.6875rem;
+  letter-spacing: 0.03em;
+}
+.post h1,
+.page h1 {
+  text-align: center;
+  font-family: "Overpass", sans-serif;
+  font-size: 1.5625rem;
+  line-height: normal;
+  letter-spacing: 0.1em;
+  margin-bottom: 2rem;
+}
+.post .post-meta,
+.page .post-meta {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--grey);
+  font-size: 0.8125rem;
+  line-height: 1.75;
+  letter-spacing: 0.05em;
+  font-family: "Overpass", sans-serif;
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+.post .post-meta .post-author,
+.page .post-meta .post-author {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+.post .post-meta .post-author img,
+.page .post-meta .post-author img {
+  aspect-ratio: 1/1;
+  width: 2rem;
+  display: block;
+  border-radius: 9999px;
+  object-fit: cover;
+  object-position: center;
+}
+
 #site-header {
   font-family: "Overpass", sans-serif;
-  padding: 1.5rem 0 7.625rem;
+  padding: 1.5rem 0 5rem;
   font-family: "Overpass", sans-serif;
   font-size: 1rem;
   line-height: 1.49;
@@ -4494,7 +4550,6 @@ summary {
   flex-direction: column;
   align-items: center;
   padding: 5.875rem 0 2.125rem;
-  border-bottom: solid thin var(--light-grey);
 }
 .identity-card img {
   width: 6.375rem;
@@ -4551,6 +4606,8 @@ summary {
   padding: 0;
   display: flex;
   flex-direction: column;
+  border-top: solid thin var(--light-grey);
+  padding-top: 1rem;
 }
 .posts-list ul {
   margin: 0;
