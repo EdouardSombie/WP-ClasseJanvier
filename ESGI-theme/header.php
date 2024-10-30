@@ -11,11 +11,17 @@
 <body <?php body_class(); ?>>
 
     <?php wp_body_open(); ?>
-    <header>
-        <?php
-        wp_nav_menu([
-            'theme_location' => 'primary_menu',
-            'container' => 'nav',
-        ]);
-        ?>
+    <header id="site-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <?php
+                    wp_nav_menu([
+                        'theme_location' => 'primary_menu',
+                        'container' => 'nav',
+                    ]);
+                    ?>
+                </div>
+            </div>
+        </div>
     </header>

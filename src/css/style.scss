@@ -17,3 +17,12 @@
 
 @import "vendor/modern-normalize";
 @import "vendor/bootstrap-grid";
+
+@import "partials/colors";
+@import "partials/fonts";
+@import "partials/functions";
+
+@import "components/header";
+@import "components/footer";
+@import "components/identity-card";
+@import "components/posts-list";
