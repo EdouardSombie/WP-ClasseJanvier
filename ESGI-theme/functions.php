@@ -1,11 +1,47 @@
 <?php
 /* Paramètres du thème */
 
-/* Chargement des assets css */
+/* Chargement des assets css et js */
 add_action('wp_enqueue_scripts', 'esgi_theme_assets');
 function esgi_theme_assets()
 {
     wp_enqueue_style('main', get_stylesheet_uri());
+    wp_enqueue_script('main', get_stylesheet_directory_uri() . '/js/main.js');
+
+    // Injection de variable dans le javascript
+    $big = 999999999; // need an unlikely integer
+    $values = [
+        'ajaxURL' => admin_url('admin-ajax.php'),
+        'base' => esc_url(get_pagenum_link($big))
+    ];
+    wp_localize_script('main', 'esgiValues', $values);
+}
+
+// Prise en charge des calls ajax
+add_action('wp_ajax_loadPosts', 'ajax_load_posts');
+add_action('wp_ajax_nopriv_loadPosts', 'ajax_load_posts');
+
+add_filter('paginate_links', 'esgi_paginate_links');
+function esgi_paginate_links($link)
+{
+    return remove_query_arg(['action', 'page', 'base'], $link);
+}
+
+
+
+function ajax_load_posts()
+{
+    //echo $_GET['page'], '-', $_GET['action'];
+    $paged = $_GET['page'];
+    $base = $_GET['base'];
+    // Ouvrir le buffer php
+    ob_start();
+    // include la liste
+    include('template-parts/posts_list.php');
+    // rendre le contenu du buffer et le fermer
+    echo ob_get_clean();
+
+    wp_die();
 }
 
 /* Ajout des supports optionnels */

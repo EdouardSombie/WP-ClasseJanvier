@@ -1,14 +1,15 @@
 .posts-list {
-	list-style: none;
+	@include reset-list;
 	margin-top: rem(68);
-	margin-bottom: 0;
-	padding: 0;
 	display: flex;
 	flex-direction: column;
 	border-top: solid thin var(--light-grey);
 	padding-top: 1rem;
-	ul {
-		@include reset-list;
+
+	li {
+		&:not(:last-child) {
+			margin-bottom: rem(30);
+		}
 	}
 	a {
 		color: inherit;
@@ -19,7 +20,7 @@
 		}
 		display: flex;
 		justify-content: space-between;
-		margin-bottom: rem(30);
+
 		span {
 			flex: 1;
 			font-size: rem(16);
@@ -37,6 +38,7 @@
 .post-list-pagination {
 	text-align: center;
 	@include text6;
+	margin-top: rem(48);
 	a {
 		text-decoration: none;
 		color: var(--text-color);
@@ -59,10 +61,4 @@
 			left: 0;
 		}
 	}
-}
-
-.post-list-wrapper {
-	padding: rem(64) 0 rem(20);
-	border-top: solid thin var(--light-grey);
-	margin: rem(12) 0;
 }

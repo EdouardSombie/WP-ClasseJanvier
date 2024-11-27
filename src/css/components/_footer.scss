@@ -1,21 +1,21 @@
-#site-footer{
+#site-footer {
 	font-family: $font1;
 	border-top: solid thin var(--light-grey);
-	margin-top: rem(34);
-	padding: rem(66) 0;
+	margin-top: rem(58);
+	padding: rem(80) 0;
 	text-align: center;
-	#searchform{
+	#searchform {
 		margin: rem(34) 0;
-		input{
+		input {
 			border: solid thin var(--light-grey);
 		}
-		[type="submit"]{
+		[type="submit"] {
 			color: var(--text-color);
 			border: none;
 			background-color: transparent;
 			transition: color 0.3s;
 			@include text4;
-			&:hover{
+			&:hover {
 				color: var(--main-color);
 			}
 		}
