@@ -1,3 +1,4 @@
+.archive,
 .post,
 .page {
 	@include text4;
@@ -26,6 +27,13 @@
 				object-fit: cover;
 				object-position: center;
 			}
+		}
+	}
+	.related_articles {
+		margin-top: 3rem;
+		h2,
+		h3 {
+			font-size: 1.25rem;
 		}
 	}
 }

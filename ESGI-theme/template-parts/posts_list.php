@@ -1,14 +1,20 @@
 <?php
-/* Récupération des 3 derniers articles */
+
 if (!isset($paged)) {
     $paged = (get_query_var('paged')) ? absint(get_query_var('paged')) : 1;
 }
+if (isset($args) && null !== $args) {
+    $args['paged'] = $paged;
+} else {
+    $args = [
+        'posts_per_page' => get_option('posts_per_page'), // on se repose sur les valeurs entrées en BO
+        'paged' => $paged,
+        'post_type' => 'post',
+    ];
+}
 
-$args = [
-    'posts_per_page' => 3,
-    'paged' => $paged,
-];
 $the_query = new WP_Query($args);
+
 ?>
 
 <ul class="posts-list">

@@ -4444,6 +4444,21 @@ img {
   height: auto;
 }
 
+a {
+  text-decoration: none;
+  color: inherit;
+  opacity: 0.8;
+}
+a:hover {
+  text-decoration: uderline;
+}
+
+ul {
+  padding-left: 0;
+  list-style-position: inside;
+}
+
+.archive,
 .post,
 .page {
   font-family: "Source Serif Pro", serif;
@@ -4451,6 +4466,7 @@ img {
   line-height: 1.6875rem;
   letter-spacing: 0.03em;
 }
+.archive h1,
 .post h1,
 .page h1 {
   text-align: center;
@@ -4460,6 +4476,7 @@ img {
   letter-spacing: 0.1em;
   margin-bottom: 2rem;
 }
+.archive .post-meta,
 .post .post-meta,
 .page .post-meta {
   display: flex;
@@ -4473,12 +4490,14 @@ img {
   gap: 2rem;
   margin-bottom: 3rem;
 }
+.archive .post-meta .post-author,
 .post .post-meta .post-author,
 .page .post-meta .post-author {
   display: flex;
   gap: 0.5rem;
   align-items: center;
 }
+.archive .post-meta .post-author img,
 .post .post-meta .post-author img,
 .page .post-meta .post-author img {
   aspect-ratio: 1/1;
@@ -4487,6 +4506,19 @@ img {
   border-radius: 9999px;
   object-fit: cover;
   object-position: center;
+}
+.archive .related_articles,
+.post .related_articles,
+.page .related_articles {
+  margin-top: 3rem;
+}
+.archive .related_articles h2,
+.archive .related_articles h3,
+.post .related_articles h2,
+.post .related_articles h3,
+.page .related_articles h2,
+.page .related_articles h3 {
+  font-size: 1.25rem;
 }
 
 #site-header {
@@ -4603,7 +4635,7 @@ img {
   margin: 0;
   padding: 0;
   list-style: none;
-  margin-top: 4.25rem;
+  margin-top: 2rem;
   display: flex;
   flex-direction: column;
   border-top: solid thin var(--light-grey);

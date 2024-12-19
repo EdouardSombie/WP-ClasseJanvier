@@ -2,12 +2,13 @@ document.addEventListener("DOMContentLoaded", (event) => {
 	ajaxifyLinks();
 });
 
-console.log(esgiValues.ajaxURL);
-console.log(esgiValues.base);
-function loadPosts(page, url) {
+function loadPosts(page, url, args = null) {
 	let base = esgiValues.base;
+	if (typeof query_args !== "undefined") {
+		args = encodeURIComponent(query_args);
+	}
 	fetch(
-		`${esgiValues.ajaxURL}?action=loadPosts&page=${page}&base=${base}`
+		`${esgiValues.ajaxURL}?action=loadPosts&page=${page}&base=${base}&args=${args}`
 	).then((response) => {
 		response.text().then((text) => {
 			document.getElementById("ajax-response").innerHTML = text;
@@ -31,7 +32,9 @@ function ajaxifyLinks() {
 				page = event.target.innerHTML;
 			}
 
-			loadPosts(page, event.target.getAttribute("href"));
+			type = typeof post_type !== "undefined" ? post_type : "post";
+
+			loadPosts(page, event.target.getAttribute("href"), type);
 		});
 	});
 }

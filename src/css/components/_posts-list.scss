@@ -1,6 +1,6 @@
 .posts-list {
 	@include reset-list;
-	margin-top: rem(68);
+	margin-top: rem(32);
 	display: flex;
 	flex-direction: column;
 	border-top: solid thin var(--light-grey);

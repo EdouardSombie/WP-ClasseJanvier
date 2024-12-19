@@ -10,9 +10,12 @@ function esgi_theme_assets()
 
     // Injection de variable dans le javascript
     $big = 999999999; // need an unlikely integer
+    $post_type = 'post';
+
     $values = [
         'ajaxURL' => admin_url('admin-ajax.php'),
-        'base' => esc_url(get_pagenum_link($big))
+        'base' => esc_url(get_pagenum_link($big)),
+        'type' => $post_type
     ];
     wp_localize_script('main', 'esgiValues', $values);
 }
@@ -24,16 +27,31 @@ add_action('wp_ajax_nopriv_loadPosts', 'ajax_load_posts');
 add_filter('paginate_links', 'esgi_paginate_links');
 function esgi_paginate_links($link)
 {
-    return remove_query_arg(['action', 'page', 'base'], $link);
+    return remove_query_arg(['action', 'page', 'base', 'args'], $link);
 }
 
+// faire en sorte que le lien vers la page blog ne soit pas 'actif' lorsque l'on consulte un projet
+add_filter('nav_menu_css_class', 'custom_post_type_menu_class', 10, 2);
+function custom_post_type_menu_class($classes, $item)
+{
+    if (is_singular('project') || is_archive('project')) {
+
+        if ($item->url == get_post_type_archive_link('post')) {
+            $classes = array_diff($classes, ['current_page_parent']);
+        }
+        if ($item->url == get_post_type_archive_link('project')) {
+            $classes[] = 'current_page_parent';
+        }
+    }
+    return $classes;
+}
 
 
 function ajax_load_posts()
 {
-    //echo $_GET['page'], '-', $_GET['action'];
     $paged = $_GET['page'];
     $base = $_GET['base'];
+    $args = $_GET['args'] != 'null' ? json_decode(stripslashes(urldecode($_GET['args'])), true) : null;
     // Ouvrir le buffer php
     ob_start();
     // include la liste
@@ -54,11 +72,11 @@ function esgi_theme_setup()
     add_theme_support('widgets');
 }
 
-add_filter('the_content', 'esgi_the_content');
-function esgi_the_content($input)
-{
-    return $input . ' 😅';
-}
+// add_filter('the_content', 'esgi_the_content');
+// function esgi_the_content($input)
+// {
+//     return $input . ' 😅';
+// }
 
 /* s'accrocher au hook d'action after_setup_theme */
 add_action('after_setup_theme', 'esgi_register_nav_menus');

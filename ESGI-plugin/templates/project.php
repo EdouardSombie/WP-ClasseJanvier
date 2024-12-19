@@ -1,24 +1,19 @@
 <?php get_header() ?>
-<main class="post">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-6 offset-md-3">
-                <?php // Dans un template de publication seule, une var $post est créée 
-                ?>
-
-                <h1><?= the_title() ?> FROM PLUGIN</h1>
-                <?= the_content() ?>
-            </div>
-            <div class="col-md-2 offset-md-1">
-                <?php
-                $sidebar = get_theme_mod('sidebar', false);
-                if ($sidebar) {
-                    get_sidebar();
-                }
-                ?>
-            </div>
-        </div>
+<main>
+    <h1><?= the_title() ?></h1>
+    <div><?= the_content() ?></div>
+    <div>
+        <?php
+        $posts = get_field('related_posts'); // pas besoin de préciser l'ID du post, car on se réfère au post courant
+        // get_field c'est une autre manière d'utiliser la méthode WP native get_post_meta
+        if (!empty($posts)) { ?>
+            <h2>Articles liés</h2>
+            <ul>
+                <?php foreach ($posts as $p) { ?>
+                    <li><a href="<?= get_permalink($p) ?>"> <?= get_the_title($p) ?> </a></li>
+                <?php } ?>
+            </ul>
+        <?php } ?>
     </div>
-
 </main>
 <?php get_footer() ?>
